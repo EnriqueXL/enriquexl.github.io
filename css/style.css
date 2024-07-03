@@ -1,0 +1,193 @@
+body {
+    background-color: #0a0a0a;
+    color: #c0c0c0;
+  
+    overflow-x: hidden;
+    font-family: "Montserrat", sans-serif;
+}
+.container {
+    max-width: 1200px;
+    padding-top: 50px;
+}
+.profile-section {
+    text-align: left;
+}
+.profile-pic {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    object-fit: cover;
+  
+    border-color: red;
+}
+.name {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+.title {
+    font-size: 1.25rem;
+    color: #a0a0a0;
+}
+.navigation {
+    margin-top: 50px;
+    list-style: none;
+    padding: 0;
+}
+.navigation li {
+    margin: 10px 0;
+}
+.navigation a {
+    color: #a0a0a0;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+.navigation a.active {
+    color: #ffffff;
+}
+.section-title {
+    font-size: 1.5rem;
+    margin-top: 50px;
+    color: #ffffff;
+}
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px 0;
+    color: #a0a0a0;
+}
+.social-icons a {
+    color: #a0a0a0;
+    margin: 0 10px;
+    font-size: 1.5rem;
+}
+.experience-item {
+    margin-bottom: 30px;
+}
+.experience-item h5 {
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+.experience-item p {
+    color: #a0a0a0;
+}
+.badge {
+    background-color: #007bff;
+    color: #ffffff;
+    margin-right: 5px;
+    font-size: 0.85rem;
+}
+.about-text {
+    color: #a0a0a0;
+}
+.switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+.switch input {
+    display: none;
+}
+.slider {
+    position: relative;
+    display: inline-block;
+
+    width: 60px;
+    height: 34px;
+    background-color: #ccc;
+    border-radius: 34px;
+    cursor: pointer;
+}
+.slider::before {
+    content: '';
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: white;
+    top: 4px;
+    left: 4px;
+    transition: 0.4s;
+}
+input:checked + .slider {
+    background-color: #2196F3;
+}
+input:checked + .slider::before {
+    transform: translateX(26px);
+}
+.light-mode {
+    background-color: #ffffff;
+    color: #000000;
+}
+.light-mode .name {
+    color: #000000;
+}
+.light-mode .title {
+    color: #606060;
+}
+.light-mode .navigation a {
+    color: #606060;
+}
+.light-mode .navigation a.active {
+    color: #000000;
+}
+.light-mode .section-title {
+    color: #000000;
+}
+.light-mode .experience-item h5 {
+    color: #000000;
+}
+.light-mode .experience-item p {
+    color: #606060;
+}
+.light-mode .footer {
+    color: #606060;
+}
+.light-mode .social-icons a {
+    color: #606060;
+}
+
+.badge {
+    background-color: #606060;
+    padding: 5px;
+    margin: 5px;
+    color: #ffffff;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+    .profile-pic {
+        width: 8rem;
+        height: 8rem;
+    }
+    .name {
+        font-size: 2rem;
+    }
+    .title {
+        font-size: 1rem;
+    }
+    .navigation {
+        margin-top: 30px;
+    }
+    .navigation a {
+        font-size: 1rem;
+    }
+    .section-title {
+        font-size: 1.25rem;
+    }
+    .experience-item h5 {
+        font-size: 1rem;
+    }
+    .experience-item p {
+        font-size: 0.9rem;
+    }
+    .footer {
+        font-size: 0.9rem;
+    }
+    .social-icons a {
+        font-size: 1.25rem;
+    }
+}
+
+

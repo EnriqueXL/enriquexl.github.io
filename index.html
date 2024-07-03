@@ -1,11 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Acerca de mi</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    Enrique
+    <div class="switch">
+        <label>
+            <div>
+                <span class="icon moon"><i class="fas fa-moon"></i></span> <!-- Icono de luna -->
+                &nbsp;&nbsp;&nbsp;
+                <span class="icon sun"><i class="fas fa-sun"></i></span> <!-- Icono de sol -->
+            </div>
+            <input type="checkbox" id="modeSwitch">
+            <span class="slider" id="slider"></span>
+        </label>
+    </div>
+    <div class="container">
+        <div class="row profile-section">
+            <div class="col-md-3">
+                <img src="./assets/img/profile/4.png" alt="Foto de Perfil" class="profile-pic">
+                <h1 class="name mt-2">Luis Enrique</h1>
+                <p class="title">Programador Backend</p>
+                <p>Construyo experiencias digitales accesibles, atractivas y de alta calidad.</p>
+                <ul class="navigation">
+                    <li><a href="#about" class="active">Sobre mí</a></li>
+                    <li><a href="#experience">Experiencia</a></li>
+                    <li><a href="#certifications">Proyectos</a></li>
+                </ul>
+                <div class="social-icons">
+                    <a href="https://github.com/EnriqueXL" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/luis-enrique-hernandez-vasquez-ba10731b9/" target="_blank"><i
+                            class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div id="about">
+                    <h2 class="section-title">Sobre mí</h2>
+                    <p class="about-text">"Soy ingeniero en sistemas computacionales con una sólida especialización en
+                        desarrollo backend. Tengo experiencia en la creación de soluciones robustas y escalables,
+                        destacándome en el diseño y la gestión de bases de datos, así como en la implementación de
+                        servicios y API. Mi enfoque se centra en la eficiencia y la optimización del rendimiento del
+                        sistema, utilizando tecnologías modernas y prácticas de desarrollo ágil. Soy apasionado por
+                        resolver problemas complejos y mejorar la funcionalidad y seguridad de las aplicaciones."
+                    </p>
+                </div>
+                <div id="experience">
+                    <h2 class="section-title">Experiencia Profesional</h2>
+                    <!-- Microtecnologías Móviles S.A. de C.V. -->
+                    <div class="experience-item">
+                        <h5>Microtecnologías Móviles S.A. de C.V.</h5>
+                        <p><em>Backend Developer.</em> Mayo 2022 - Actualidad</p>
+                        <ul>
+                            <li>
+                                Elaboré informes eficientes, desarrollé módulos de software personalizados (gestión de
+                                inventarios,
+                                control de distribuidores, análisis de riesgo de fraude, etc.), implementé APIs y
+                                optimicé consultas
+                                SQL, mejorando significativamente los tiempos de respuesta del servidor.
+                            </li>
+
+                        </ul>
+                        <span class="badge">PHP</span>
+                        <span class="badge">jQuery</span>
+                        <span class="badge">AJAX</span>
+                        <span class="badge">SQL</span>
+                        <span class="badge">APIs</span>
+                        <span class="badge">Javascript</span>
+                        <span class="badge">Bootstrap</span>
+                        <span class="badge">Git</span>
+                        <span class="badge">Trello</span>
+                        <span class="badge">APIs</span>
+                        <span class="badge">PapaParse</span>
+                    </div>
+                    <!-- ICS Multiservicios Industriales S.A. DE C.V. -->
+                    <div class="experience-item">
+                        <h5>ICS Multiservicios Industriales S.A. DE C.V.</h5>
+                        <p><em>Full-Stack en ICS Multiservicios Industriales S.A. DE C.V. </em> Abr 2021 - Abr 2022 </p>
+                        <ul>
+                            <li>
+                                Desarrollé desde cero el sitio web de la empresa, formularios de evaluación y
+                                generadores de informes.
+                                Implementé un portal administrativo para optimizar operaciones, migrando de programas
+                                ofimáticos.
+                                Construí tiendas en línea con WordPress/Elementor y WooCommerce. Programé aplicaciones
+                                móviles para
+                                guardias de seguridad.
+                            </li>
+
+                        </ul>
+                        <span class="badge">PHP</span>
+                        <span class="badge">Laravel</span>
+                        <span class="badge">SQL</span>
+                        <span class="badge">APIs</span>
+                        <span class="badge">Javascript</span>
+                        <span class="badge">Bootstrap</span>
+                        <span class="badge">Git</span>
+                        <span class="badge">Trello</span>
+                        <span class="badge">APIs</span>
+                        <span class="badge">Google Maps API</span>
+                        <span class="badge">Google Geocoding API</span>
+                        <span class="badge">Ionic</span>
+                        <span class="badge">WordPress</span>
+                        <span class="badge">Elementor</span>
+                        <span class="badge">WooCommerce</span>
+                        <span class="badge">Ionic</span>
+                        <span class="badge">Angular</span>
+                        <span class="badge">NodeJS</span>
+                        <span class="badge">Capacitor</span>
+
+
+                    </div>
+
+                    <!-- iTechs -->
+                    <div class="experience-item">
+                        <h5>iTechs</h5>
+                        <p><em>Backend Developer en iTechs</em> Sep 2020 – Dic 2020 </p>
+                        <ul>
+                            <li>
+                                En el ERP "ADAPLI", agregué nuevas características y desarrollé software a medida para
+                                los clientes. Creé bases de datos en SQL, estableciendo relaciones con llaves foráneas y
+                                procedimientos almacenados. Propuse soluciones a problemas del sistema y desarrollé una
+                                aplicación web progresiva capaz de funcionar sin conexión, utilizando localstorage,
+                                indexeddb y service worker.
+                            </li>
+
+                        </ul>
+                        <span class="badge">.NET</span>
+                        <span class="badge">SQL</span>
+                        <span class="badge">C#</span>
+                        <span class="badge">Javascript</span>
+                        <span class="badge">Bootstrap</span>
+                        <span class="badge">PWA</span>
+                        <span class="badge">Trello</span>
+
+                    </div>
+                </div>
+                <div id="certifications">
+                    <h2 class="section-title">Certificaciones.</h2>
+                    <p class="about-text">Aquí puedes ver algunos de los proyectos en los que he trabajado.</p>
+                    <div class="card-deck">
+                        <div class="card text-white bg-dark">
+                            <img src="./assets/img/certifications/blogMVC.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Curso de udemy.</h5> 
+
+                                <footer class="blockquote-footer ">
+                                    <a href="https://ude.my/UC-610a5f30-1235-4d8d-9c47-5ffe04a94d78" target="_blank">Validación del certificado</a>
+                                </footer>
+                            </div>
+                        </div>
+                        <div class="card text-white bg-dark">
+                            <img src="./assets/img/certifications/ApiRest.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Curso de udemy.</h5>
+                                <footer class="blockquote-footer ">
+                                    <a href="https://ude.my/UC-610a5f30-1235-4d8d-9c47-5ffe04a94d78" target="_blank">Validación del certificado</a>
+                                </footer>
+              
+                            </div>
+                        </div>
+                      
+                       
+                    </div>
+                
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Luis Enrique Hernández Vásquez. Todos los derechos reservados.</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    
+    <script src="js/main.js"></script>
 </body>
+
 </html>
