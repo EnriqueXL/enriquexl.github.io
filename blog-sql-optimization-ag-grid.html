@@ -4,7 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Optimización SQL: Paginado y AG Grid vs DataTables - EnriqueXL</title>
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+    <title>Optimización SQL para AG Grid - EnriqueXL</title>
+    
+    <!-- Script para aplicar tema inmediatamente y evitar parpadeo -->
+    <script>
+        (function() {
+            // Función para obtener el tema preferido
+            function getPreferredTheme() {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme) {
+                    return savedTheme === 'light';
+                }
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    return true;
+                }
+                return false;
+            }
+            
+            // Aplicar tema inmediatamente
+            const isLightMode = getPreferredTheme();
+            if (isLightMode) {
+                document.documentElement.classList.add('light-mode');
+            }
+            
+            // Agregar clase para prevenir parpadeo
+            document.documentElement.classList.add('theme-loading');
+        })();
+    </script>
+    
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="./css/style.css">

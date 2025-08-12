@@ -12,15 +12,21 @@
     --border-color: #333333;
     --border-light-color: #dee2e6;
     --transition: all 0.3s ease;
+    --theme-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Estilos base */
+html {
+    transition: var(--theme-transition);
+}
+
 body {
     background-color: var(--dark-bg);
     color: var(--dark-text);
     font-family: "Montserrat", sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
+    transition: var(--theme-transition);
 }
 
 .light-mode {
@@ -28,12 +34,48 @@ body {
     color: var(--light-text);
 }
 
+html.light-mode body {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+
+/* Prevenir parpadeo durante la carga inicial */
+html.theme-loading,
+body.theme-loading {
+    opacity: 0;
+    transition: opacity 0.1s ease;
+}
+
+html.theme-loaded,
+body.theme-loaded {
+    opacity: 1;
+}
+
+/* Transiciones suaves para todos los elementos que cambian con el tema */
+* {
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Excepciones para elementos que no deben tener transición */
+.switch .slider,
+.navbar-toggler-icon,
+.hero-image,
+img,
+video,
+canvas,
+svg {
+    transition: none;
+}
+
 /* Navegación */
 .navbar {
     background-color: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
-    transition: var(--transition);
+    transition: var(--theme-transition);
 }
 
 .navbar.scrolled {
@@ -218,8 +260,8 @@ body {
 
 .switch .slider {
     position: absolute;
-    top: 4px;
-    left: 4px;
+    top: 2px;
+    left: 2px;
     width: 26px;
     height: 26px;
     background-color: white;

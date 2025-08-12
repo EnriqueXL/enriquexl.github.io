@@ -1,39 +1,117 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Agregar clase de carga para prevenir parpadeo
+    document.documentElement.classList.add('theme-loading');
+    document.body.classList.add('theme-loading');
+    
     // Elementos del DOM
     const modeSwitch = document.getElementById('modeSwitch');
     const slider = document.getElementById('slider');
     const body = document.body;
+    const html = document.documentElement;
     const heroImage = document.querySelector('.hero-image');
     const navProfilePic = document.querySelector('.nav-profile-pic');
 
-    // Función para cambiar el modo
-    const toggleMode = () => {
-        const isLightMode = body.classList.toggle('light-mode');
+    // Función para aplicar el tema
+    const applyTheme = (isLightMode) => {
+        if (isLightMode) {
+            html.classList.add('light-mode');
+            body.classList.add('light-mode');
+        } else {
+            html.classList.remove('light-mode');
+            body.classList.remove('light-mode');
+        }
 
-            // Cambiar imagen de perfil según el modo
-    if (heroImage) {
-        const imagePath = 'assets/img/profile-picture/profile.webp';
-        heroImage.src = imagePath;
-        console.log('Cargando imagen:', imagePath);
-    }
-            if (navProfilePic) {
-        const navImagePath = isLightMode ? 'assets/img/profile/1.webp' : 'assets/img/profile/4.webp';
-        navProfilePic.src = navImagePath;
-    }
+        // Cambiar imagen de perfil según el modo
+        if (heroImage) {
+            const imagePath = 'assets/img/profile-picture/profile.webp';
+            heroImage.src = imagePath;
+            console.log('Cargando imagen:', imagePath);
+        }
+        
+        if (navProfilePic) {
+            const navImagePath = isLightMode ? 'assets/img/profile/1.webp' : 'assets/img/profile/4.webp';
+            navProfilePic.src = navImagePath;
+        }
 
         // Guardar preferencia en localStorage
         localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
+        
+        // Actualizar el estado del switch
+        if (modeSwitch) {
+            modeSwitch.checked = isLightMode;
+        }
+    };
+
+    // Función para obtener el tema preferido del usuario
+    const getPreferredTheme = () => {
+        // Primero verificar si hay una preferencia guardada
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            return savedTheme === 'light';
+        }
+        
+        // Si no hay preferencia guardada, usar la preferencia del sistema
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            return true;
+        }
+        
+        // Por defecto, tema oscuro
+        return false;
+    };
+
+    // Función para cambiar el modo
+    const toggleMode = () => {
+        const currentTheme = body.classList.contains('light-mode');
+        const newTheme = !currentTheme;
+        applyTheme(newTheme);
     };
 
     // Event listener para el switch
-    modeSwitch.addEventListener('change', toggleMode);
-
-    // Cargar tema guardado
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-        modeSwitch.checked = true;
-        toggleMode();
+    if (modeSwitch) {
+        modeSwitch.addEventListener('change', toggleMode);
     }
+
+    // Inicializar tema al cargar la página
+    const preferredTheme = getPreferredTheme();
+    applyTheme(preferredTheme);
+    
+    // Remover clase de carga y agregar clase de tema cargado
+    setTimeout(() => {
+        document.documentElement.classList.remove('theme-loading');
+        document.documentElement.classList.add('theme-loaded');
+        document.body.classList.remove('theme-loading');
+        document.body.classList.add('theme-loaded');
+    }, 50);
+
+    // Escuchar cambios en la preferencia del sistema
+    if (window.matchMedia) {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
+        
+        const handleSystemThemeChange = (e) => {
+            // Solo cambiar si no hay una preferencia explícita del usuario
+            const savedTheme = localStorage.getItem('theme');
+            if (!savedTheme) {
+                applyTheme(e.matches);
+            }
+        };
+
+        // Agregar listener para cambios en la preferencia del sistema
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', handleSystemThemeChange);
+        } else {
+            // Fallback para navegadores más antiguos
+            mediaQuery.addListener(handleSystemThemeChange);
+        }
+    }
+
+    // Prevenir el cambio automático de tema al cambiar de pestaña
+    document.addEventListener('visibilitychange', () => {
+        // Mantener el tema actual sin importar el estado de la pestaña
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            applyTheme(currentTheme === 'light');
+        }
+    });
 
     // Navegación suave para enlaces internos
     const internalLinks = document.querySelectorAll('a[href^="#"]');
