@@ -111,7 +111,8 @@ body {
     display: inline-block;
     width: 60px;
     height: 34px;
-    background-color: #ccc;
+    background-color: #e0e0e0;
+    border: 2px solid #d0d0d0;
     border-radius: 34px;
     cursor: pointer;
     transition: var(--transition);
@@ -132,7 +133,7 @@ body {
 }
 
 .switch .icon {
-    color: #666;
+    color: #888;
     font-size: 14px;
     transition: var(--transition);
     z-index: 2;
@@ -161,6 +162,7 @@ body {
 
 #modeSwitch:checked + label {
     background-color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 #modeSwitch:checked + label .icon {
@@ -169,6 +171,25 @@ body {
 
 #modeSwitch:checked + label .slider {
     transform: translateX(26px);
+}
+
+/* Mejorar visibilidad en modo claro para escritorio */
+.light-mode .switch label {
+    background-color: #f5f5f5;
+    border-color: #d0d0d0;
+}
+
+.light-mode .switch .icon {
+    color: #666;
+}
+
+.light-mode #modeSwitch:checked + label {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.light-mode #modeSwitch:checked + label .icon {
+    color: white;
 }
 
 /* Hero Section */
@@ -864,6 +885,50 @@ body {
         width: 30px;
         height: 30px;
     }
+    
+    /* Mejoras para el switch en móvil */
+    .switch label {
+        width: 50px;
+        height: 28px;
+        background-color: #e0e0e0;
+        border: 2px solid #d0d0d0;
+    }
+    
+    .switch .slider {
+        width: 20px;
+        height: 20px;
+        top: 2px;
+        left: 2px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+    
+    .switch .icon {
+        font-size: 12px;
+        color: #888;
+    }
+    
+    #modeSwitch:checked + label .slider {
+        transform: translateX(22px);
+    }
+    
+    /* Mejorar visibilidad en modo claro */
+    .light-mode .switch label {
+        background-color: #f0f0f0;
+        border-color: #d0d0d0;
+    }
+    
+    .light-mode .switch .icon {
+        color: #666;
+    }
+    
+    .light-mode #modeSwitch:checked + label {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+    }
+    
+    .light-mode #modeSwitch:checked + label .icon {
+        color: white;
+    }
 }
 
 @media (max-width: 576px) {
@@ -888,6 +953,31 @@ body {
     .project-card,
     .resource-card {
         padding: 20px;
+    }
+    
+    /* Switch aún más compacto para pantallas muy pequeñas */
+    .switch label {
+        width: 45px;
+        height: 25px;
+    }
+    
+    .switch .slider {
+        width: 17px;
+        height: 17px;
+        top: 2px;
+        left: 2px;
+    }
+    
+    .switch .icon {
+        font-size: 10px;
+    }
+    
+    #modeSwitch:checked + label .slider {
+        transform: translateX(20px);
+    }
+    
+    .switch label > div {
+        padding: 0 6px;
     }
 }
 
