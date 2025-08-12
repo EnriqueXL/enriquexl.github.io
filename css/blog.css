@@ -1,5 +1,10 @@
 /* Estilos específicos para páginas de blog */
 
+/* Switch de tema para páginas de blog - ahora usa los mismos estilos que la página principal */
+/* Los estilos del switch están heredados de style.css */
+
+
+
 .blog-post {
     padding-top: 100px;
     padding-bottom: 60px;

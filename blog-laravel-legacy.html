@@ -22,7 +22,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="./assets/img/profile/4.png" alt="EnriqueXL" class="nav-profile-pic">
+                <!-- <img src="./assets/img/profile/4.png" alt="EnriqueXL" class="nav-profile-pic"> -->
                 EnriqueXL
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
@@ -45,23 +45,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="index.html#contact">Contacto</a>
                     </li>
+                    <li class="nav-item">
+                        <!-- Switch de tema -->
+                        <div class="switch">
+                            <input type="checkbox" id="modeSwitch">
+                            <label for="modeSwitch">
+                                <div>
+                                    <span class="icon moon"><i class="fas fa-moon"></i></span>
+                                    <span class="icon sun"><i class="fas fa-sun"></i></span>
+                                </div>
+                                <span class="slider" id="slider"></span>
+                            </label>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-
-    <!-- Switch de tema -->
-    <div class="switch">
-        <label>
-            <div>
-                <span class="icon moon"><i class="fas fa-moon"></i></span>
-                &nbsp;&nbsp;&nbsp;
-                <span class="icon sun"><i class="fas fa-sun"></i></span>
-            </div>
-            <input type="checkbox" id="modeSwitch">
-            <span class="slider" id="slider"></span>
-        </label>
-    </div>
 
     <!-- Blog Post Content -->
     <article class="blog-post">
