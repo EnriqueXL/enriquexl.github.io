@@ -291,40 +291,24 @@
     width: fit-content;
 }
 
-.share-btn.twitter {
-    background-color: #1da1f2;
+.share-btn.whatsapp {
+    background-color: #25d366;
     color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
-.share-btn.twitter:hover {
-    background-color: #0d8bd9;
+.share-btn.whatsapp:hover {
+    background-color: #128c7e;
     color: white;
     text-decoration: none;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
 }
 
-.share-btn.linkedin {
-    background-color: #0077b5;
-    color: white;
-}
-
-.share-btn.linkedin:hover {
-    background-color: #005885;
-    color: white;
-    text-decoration: none;
-    transform: translateY(-2px);
-}
-
-.share-btn.facebook {
-    background-color: #4267b2;
-    color: white;
-}
-
-.share-btn.facebook:hover {
-    background-color: #365899;
-    color: white;
-    text-decoration: none;
-    transform: translateY(-2px);
+.share-btn.whatsapp:active {
+    transform: translateY(0);
 }
 
 /* Responsive */

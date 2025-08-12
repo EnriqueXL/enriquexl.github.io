@@ -249,4 +249,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     `;
     document.head.appendChild(style);
+
+    // Funcionalidad para compartir por WhatsApp
+    const shareWhatsAppBtn = document.getElementById('shareWhatsApp');
+    if (shareWhatsAppBtn) {
+        shareWhatsAppBtn.addEventListener('click', () => {
+            const currentUrl = window.location.href;
+            const title = document.title || 'Artículo de EnriqueXL';
+            const message = `¡Mira este artículo interesante: ${title}\n\n${currentUrl}`;
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            
+            // Abrir WhatsApp en una nueva ventana
+            window.open(whatsappUrl, '_blank', 'width=600,height=400');
+        });
+    }
 });
