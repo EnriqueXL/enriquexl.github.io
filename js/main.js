@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('contextmenu', (e) => {
         if (e.target.closest('.protected-image-container')) {
             e.preventDefault();
-            showProtectionMessage('Imagen protegida');
+            // showProtectionMessage('Imagen protegida');
         }
     });
 
