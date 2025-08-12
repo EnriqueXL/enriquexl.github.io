@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acerca de mi</title>
+    <title>EnriqueXL - Blog de Desarrollo</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="./css/style.css">
@@ -17,166 +17,544 @@
 </head>
 
 <body>
-    <div class="switch">
-        <label>
-            <div>
-                <span class="icon moon"><i class="fas fa-moon"></i></span> <!-- Icono de luna -->
-                &nbsp;&nbsp;&nbsp;
-                <span class="icon sun"><i class="fas fa-sun"></i></span> <!-- Icono de sol -->
-            </div>
-            <input type="checkbox" id="modeSwitch">
-            <span class="slider" id="slider"></span>
-        </label>
-    </div>
-    <div class="container">
-        <div class="row profile-section">
-            <div class="col-md-3">
-                <img src="./assets/img/profile/4.png" alt="Foto de Perfil" class="profile-pic">
-                <h1 class="name mt-2">Luis Enrique</h1>
-                <p class="title">Ingeniero de software</p>
-                <p>Construyo experiencias digitales accesibles, atractivas y de alta calidad.</p>
-                <ul class="navigation">
-                    <li><a href="#about" class="active">Sobre mí</a></li>
-                    <li><a href="#experience">Experiencia</a></li>
-                    <li><a href="#certifications">Proyectos</a></li>
+    <!-- Header con navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <img src="./assets/img/profile/4.png" alt="EnriqueXL" class="nav-profile-pic">
+                EnriqueXL
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Proyectos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#resources">Recursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contacto</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Switch de tema -->
+                        <div class="switch">
+                            <input type="checkbox" id="modeSwitch">
+                            <label for="modeSwitch">
+                                <div>
+                                    <span class="icon moon"><i class="fas fa-moon"></i></span>
+                                    <span class="icon sun"><i class="fas fa-sun"></i></span>
+                                </div>
+                                <span class="slider" id="slider"></span>
+                            </label>
+                        </div>
+                    </li>
                 </ul>
-                <div class="social-icons">
-                    <a href="https://github.com/EnriqueXL" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/luis-enrique-hernandez-vasquez-ba10731b9/" target="_blank"><i
-                            class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div id="about">
-                    <h2 class="section-title">Sobre mí</h2>
-                    <p class="about-text">"Ingeniero en Sistemas Computacionales con especialización en desarrollo backend. Cuento con experiencia en la creación de soluciones robustas y escalables, destacándome en el diseño y gestión de bases de datos, así como en la implementación de servicios y APIs. Mi enfoque está en la eficiencia y optimización del rendimiento del sistema, utilizando tecnologías modernas y prácticas de desarrollo ágil. Soy apasionado por resolver problemas complejos y mejorar la funcionalidad y seguridad de las aplicaciones."
-                    </p>
-                </div>
-                <div id="experience">
-                    <h2 class="section-title">Experiencia Profesional</h2>
-                    <!-- Microtecnologías Móviles S.A. de C.V. -->
-                    <div class="experience-item">
-                        <h5>Microtecnologías Móviles S.A. de C.V.</h5>
-                        <p><em>Backend Developer.</em> Mayo 2022 - Actualidad</p>
-                        <ul>
-                            <li>
-                                Elaboré informes eficientes, desarrollé módulos de software personalizados (gestión de
-                                inventarios,
-                                control de distribuidores, análisis de riesgo de fraude, etc.), implementé APIs y
-                                optimicé consultas
-                                SQL, mejorando significativamente los tiempos de respuesta del servidor.
-                            </li>
-
-                        </ul>
-                        <span class="badge">PHP</span>
-                        <span class="badge">jQuery</span>
-                        <span class="badge">AJAX</span>
-                        <span class="badge">SQL</span>
-                        <span class="badge">APIs</span>
-                        <span class="badge">Javascript</span>
-                        <span class="badge">Bootstrap</span>
-                        <span class="badge">Git</span>
-                        <span class="badge">Trello</span>
-                        <span class="badge">PapaParse</span>
-                    </div>
-                    <!-- ICS Multiservicios Industriales S.A. DE C.V. -->
-                    <div class="experience-item">
-                        <h5>ICS Multiservicios Industriales S.A. DE C.V.</h5>
-                        <p><em>Full-Stack en ICS Multiservicios Industriales S.A. DE C.V. </em> Abr 2021 - Abr 2022 </p>
-                        <ul>
-                            <li>
-                                Desarrollé desde cero el sitio web de la empresa, formularios de evaluación y
-                                generadores de informes.
-                                Implementé un portal administrativo para optimizar operaciones, migrando de programas
-                                ofimáticos.
-                                Construí tiendas en línea con WordPress/Elementor y WooCommerce. Programé aplicaciones
-                                móviles para
-                                guardias de seguridad.
-                            </li>
-
-                        </ul>
-                        <span class="badge">PHP</span>
-                        <span class="badge">Laravel</span>
-                        <span class="badge">SQL</span>
-                        <span class="badge">APIs</span>
-                        <span class="badge">Javascript</span>
-                        <span class="badge">Bootstrap</span>
-                        <span class="badge">Git</span>
-                        <span class="badge">Trello</span>
-                        <span class="badge">Google Maps API</span>
-                        <span class="badge">Google Geocoding API</span>
-                        <span class="badge">WordPress</span>
-                        <span class="badge">Elementor</span>
-                        <span class="badge">WooCommerce</span>
-                        <span class="badge">Ionic</span>
-                        <span class="badge">Angular</span>
-                        <span class="badge">NodeJS</span>
-                        <span class="badge">Capacitor</span>
-
-
-                    </div>
-
-                    <!-- iTechs -->
-                    <div class="experience-item">
-                        <h5>iTechs</h5>
-                        <p><em>Backend Developer en iTechs</em> Sep 2020 – Dic 2020 </p>
-                        <ul>
-                            <li>
-                                En el ERP "ADAPLI", agregué nuevas características y desarrollé software a medida para
-                                los clientes. Creé bases de datos en SQL, estableciendo relaciones con llaves foráneas y
-                                procedimientos almacenados. Propuse soluciones a problemas del sistema y desarrollé una
-                                aplicación web progresiva capaz de funcionar sin conexión, utilizando localstorage,
-                                indexeddb y service worker.
-                            </li>
-
-                        </ul>
-                        <span class="badge">.NET</span>
-                        <span class="badge">SQL</span>
-                        <span class="badge">C#</span>
-                        <span class="badge">Javascript</span>
-                        <span class="badge">Bootstrap</span>
-                        <span class="badge">PWA</span>
-                        <span class="badge">Trello</span>
-
-                    </div>
-                </div>
-                <div id="certifications">
-                    <h2 class="section-title">Certificaciones.</h2>
-                    <p class="about-text">Aquí puedes ver algunos de los proyectos en los que he trabajado.</p>
-                    <div class="card-deck">
-                        <div class="card text-white bg-dark">
-                            <img src="./assets/img/certifications/blogMVC.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Curso de udemy.</h5> 
-
-                                <footer class="blockquote-footer ">
-                                    <a href="https://ude.my/UC-610a5f30-1235-4d8d-9c47-5ffe04a94d78" target="_blank">Validación del certificado</a>
-                                </footer>
-                            </div>
-                        </div>
-                        <div class="card text-white bg-dark">
-                            <img src="./assets/img/certifications/ApiRest.jpg" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Curso de udemy.</h5>
-                                <footer class="blockquote-footer ">
-                                    <a href="https://ude.my/UC-610a5f30-1235-4d8d-9c47-5ffe04a94d78" target="_blank">Validación del certificado</a>
-                                </footer>
-              
-                            </div>
-                        </div>
-                      
-                       
-                    </div>
-                
-                </div>
-
             </div>
         </div>
-    </div>
+    </nav>
 
-    <div class="footer">
-        <p>&copy; 2024 Luis Enrique Hernández Vásquez. Todos los derechos reservados.</p>
-    </div>
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center min-vh-100">
+                <div class="col-lg-12">
+                    <div class="hero-content text-center">
+                        <div class="hero-header">
+                            <div class="protected-image-container">
+                                <img src="assets/img/profile-picture/profile.jpeg" alt="Enrique Hernández" class="hero-image protected-image" draggable="false" onerror="this.src='assets/img/profile/1.png'">
+                                <div class="image-overlay">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Imagen Protegida</span>
+                                </div>
+                            </div>
+                            <h1 class="hero-title">¡Hola! Soy Enrique</h1>
+                        </div>
+                        <p class="hero-subtitle">Desarrollador Full-Stack apasionado por crear soluciones digitales que marcan la diferencia</p>
+                        <p class="hero-description">
+                            Especializado en PHP y aplicaciones móviles con Ionic. 
+                            Me encanta compartir conocimiento y experiencias a través de este blog.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#blog" class="btn btn-primary btn-lg">Leer Blog</a>
+                            <a href="#projects" class="btn btn-outline-primary btn-lg ml-3">Ver Proyectos</a>
+                        </div>
+                        <div class="social-icons mt-4">
+                            <a href="https://github.com/EnriqueXL" target="_blank" class="social-icon">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/luis-enrique-hernandez-vasquez-ba10731b9/" target="_blank" class="social-icon">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="mailto:ing.enrique.sistemas@gmail.com" class="social-icon">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="section-padding">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2 class="section-title">Blog</h2>
+                <p class="section-subtitle">Reflexiones, tutoriales y experiencias en desarrollo</p>
+            </div>
+            
+            <div class="row">
+                <!-- Blog Post 1 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <article class="blog-card">
+                        <div class="blog-card-image">
+                            <div class="blog-category">Laravel</div>
+                        </div>
+                        <div class="blog-card-content">
+                            <h3 class="blog-card-title">Migrando Sistemas Legacy a Laravel: Separación de Responsabilidades</h3>
+                            <p class="blog-card-excerpt">
+                                Mi experiencia migrando sistemas PHP legacy a Laravel implementando servicios independientes, 
+                                controladores limpios y arquitectura escalable. Evitando lógica de negocio en controladores.
+                            </p>
+                            <div class="blog-card-meta">
+                                <span class="blog-date">15 Mar 2024</span>
+                                <span class="blog-read-time">8 min lectura</span>
+                            </div>
+                            <div class="blog-tags">
+                                <span class="blog-tag">Arquitectura</span>
+                                <span class="blog-tag">Servicios</span>
+                                <span class="blog-tag">Clean Code</span>
+                            </div>
+                            <a href="blog-laravel-legacy.html" class="blog-card-link" target="_blank">Leer más <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Blog Post 2 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <article class="blog-card">
+                        <div class="blog-card-image">
+                            <div class="blog-category">Ionic</div>
+                        </div>
+                        <div class="blog-card-content">
+                            <h3 class="blog-card-title">Buenas Prácticas en Apps Móviles con Ionic</h3>
+                            <p class="blog-card-excerpt">
+                                Guía completa de mejores prácticas para desarrollo móvil con Ionic: optimización de rendimiento, 
+                                gestión de estado, lazy loading y patrones de arquitectura recomendados.
+                            </p>
+                            <div class="blog-card-meta">
+                                <span class="blog-date">10 Mar 2024</span>
+                                <span class="blog-read-time">10 min lectura</span>
+                            </div>
+                            <div class="blog-tags">
+                                <span class="blog-tag">Performance</span>
+                                <span class="blog-tag">Arquitectura</span>
+                                <span class="blog-tag">Angular</span>
+                            </div>
+                            <br>
+                            <br>
+                            <a href="blog-ionic-best-practices.html" class="blog-card-link" target="_blank">Leer más <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Blog Post 3 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <article class="blog-card">
+                        <div class="blog-card-image">
+                            <div class="blog-category">SQL</div>
+                        </div>
+                        <div class="blog-card-content">
+                            <h3 class="blog-card-title">Optimización SQL: Paginado y AG Grid vs DataTables</h3>
+                            <p class="blog-card-excerpt">
+                                Cómo optimizar consultas SQL con paginado del lado del cliente, delegando carga al navegador. 
+                                Comparación AG Grid vs DataTables jQuery: ¿por qué AG Grid es superior?
+                            </p>
+                            <div class="blog-card-meta">
+                                <span class="blog-date">5 Mar 2024</span>
+                                <span class="blog-read-time">7 min lectura</span>
+                            </div>
+                            <div class="blog-tags">
+                                <span class="blog-tag">Performance</span>
+                                <span class="blog-tag">AG Grid</span>
+                                <span class="blog-tag">Paginado</span>
+                            </div>
+                            <br>
+                            <a href="blog-sql-optimization-ag-grid.html" class="blog-card-link" target="_blank">Leer más <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            </div>
+
+            <!-- Blog Post 4
+            <div class="row mt-5">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <article class="blog-card">
+                        <div class="blog-card-image">
+                            <div class="blog-category">APIs</div>
+                        </div>
+                        <div class="blog-card-content">
+                            <h3 class="blog-card-title">Diseño de APIs REST: Mejores Prácticas</h3>
+                            <p class="blog-card-excerpt">
+                                Patrones de diseño para APIs REST escalables, manejo de errores, versionado, 
+                                autenticación y documentación. Casos reales de integración con servicios externos.
+                            </p>
+                            <div class="blog-card-meta">
+                                <span class="blog-date">1 Mar 2024</span>
+                                <span class="blog-read-time">9 min lectura</span>
+                            </div>
+                            <div class="blog-tags">
+                                <span class="blog-tag">REST</span>
+                                <span class="blog-tag">APIs</span>
+                                <span class="blog-tag">Integración</span>
+                            </div>
+                            <a href="#" class="blog-card-link">Leer más <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <article class="blog-card">
+                        <div class="blog-card-image">
+                            <div class="blog-category">PWA</div>
+                        </div>
+                        <div class="blog-card-content">
+                            <h3 class="blog-card-title">PWAs Offline: Service Workers y IndexedDB</h3>
+                            <p class="blog-card-excerpt">
+                                Cómo crear aplicaciones web progresivas que funcionan sin conexión. 
+                                Implementación de Service Workers, sincronización con IndexedDB y estrategias de cache.
+                            </p>
+                            <div class="blog-card-meta">
+                                <span class="blog-date">25 Feb 2024</span>
+                                <span class="blog-read-time">6 min lectura</span>
+                            </div>
+                            <div class="blog-tags">
+                                <span class="blog-tag">PWA</span>
+                                <span class="blog-tag">Offline</span>
+                                <span class="blog-tag">Service Workers</span>
+                            </div>
+                            <a href="#" class="blog-card-link">Leer más <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <article class="blog-card">
+                        <div class="blog-card-image">
+                            <div class="blog-category">DevOps</div>
+                        </div>
+                        <div class="blog-card-content">
+                            <h3 class="blog-card-title">CI/CD con Git: Flujos de Trabajo Eficientes</h3>
+                            <p class="blog-card-excerpt">
+                                Configuración de pipelines de integración continua, estrategias de branching, 
+                                deployment automatizado y mejores prácticas para equipos de desarrollo.
+                            </p>
+                            <div class="blog-card-meta">
+                                <span class="blog-date">20 Feb 2024</span>
+                                <span class="blog-read-time">5 min lectura</span>
+                            </div>
+                            <div class="blog-tags">
+                                <span class="blog-tag">Git</span>
+                                <span class="blog-tag">CI/CD</span>
+                                <span class="blog-tag">DevOps</span>
+                            </div>
+                            <a href="#" class="blog-card-link">Leer más <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- <div class="text-center mt-5">
+                <a href="#" class="btn btn-outline-primary">Ver todos los posts</a>
+            </div> -->
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section-padding bg-light">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2 class="section-title">Proyectos Destacados</h2>
+                <p class="section-subtitle">Algunos de los proyectos en los que he trabajado</p>
+            </div>
+
+            <div class="row">
+                <!-- Project 1 -->
+                <div class="col-lg-6 mb-4">
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <h3 class="project-title">Sistema de RRHH - Laravel 12 + AG Grid</h3>
+                            <div class="project-links">
+                                <!-- <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a> -->
+                                <!-- <a href="#" class="project-link"><i class="fab fa-github"></i></a> -->
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Sistema completo de gestión de recursos humanos desarrollado con Laravel 12, Bootstrap 5, 
+                            Vite y AG Grid. Manejo de empleados, nóminas y reportes con tablas de alto rendimiento.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Laravel 12</span>
+                            <span class="tech-tag">Bootstrap 5</span>
+                            <span class="tech-tag">Vite</span>
+                            <span class="tech-tag">AG Grid</span>
+                            <span class="tech-tag">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="col-lg-6 mb-4">
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <h3 class="project-title">App Móvil para Guardias de Seguridad</h3>
+                            <div class="project-links">
+                                <!-- <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a> -->
+                                <!-- <a href="#" class="project-link"><i class="fab fa-github"></i></a> -->
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Aplicación móvil para gestión de rondas de seguridad con geolocalización, 
+                            reportes en tiempo real y sincronización offline.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Ionic</span>
+                            <span class="tech-tag">Angular</span>
+                            <span class="tech-tag">Google Maps API</span>
+                            <span class="tech-tag">PWA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="col-lg-6 mb-4">
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <h3 class="project-title">Portal Administrativo ICS</h3>
+                            <div class="project-links">
+                                <!-- <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a> -->
+                                <!-- <a href="#" class="project-link"><i class="fab fa-github"></i></a> -->
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Portal web completo para digitalización de procesos administrativos, 
+                            incluyendo formularios de evaluación y generación automática de informes.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Laravel</span>
+                            <span class="tech-tag">Bootstrap 5</span>
+                            <!-- <span class="tech-tag">WordPress</span>
+                            <span class="tech-tag">WooCommerce</span> -->
+                            <span class="tech-tag">MySQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="col-lg-6 mb-4">
+                    <div class="project-card">
+                        <div class="project-card-header">
+                            <h3 class="project-title">PWA Offline para ERP</h3>
+                            <div class="project-links">
+                                <!-- <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a> -->
+                                <!-- <a href="#" class="project-link"><i class="fab fa-github"></i></a> -->
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Aplicación web progresiva que funciona sin conexión para el ERP ADAPLI, 
+                            utilizando IndexedDB y Service Workers para sincronización de datos.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">PWA</span>
+                            <span class="tech-tag">IndexedDB</span>
+                            <span class="tech-tag">Service Workers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="section-padding">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2 class="section-title">Recursos Útiles</h2>
+                <p class="section-subtitle">Herramientas, tutoriales y enlaces que recomiendo</p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3 class="resource-title">Certificaciones</h3>
+                        <p class="resource-description">
+                            Certificaciones que he obtenido y recomiendo para desarrolladores.
+                        </p>
+                        <div class="resource-links">
+                            <a href="https://ude.my/UC-610a5f30-1235-4d8d-9c47-5ffe04a94d78" target="_blank" class="resource-link">
+                                <img src="./assets/img/certifications/blogMVC.jpg" alt="Blog MVC" class="cert-img">
+                                Blog MVC
+                            </a>
+                            <a href="https://ude.my/UC-610a5f30-1235-4d8d-9c47-5ffe04a94d78" target="_blank" class="resource-link">
+                                <img src="./assets/img/certifications/ApiRest.jpg" alt="API REST" class="cert-img">
+                                API REST
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3 class="resource-title">Herramientas Favoritas</h3>
+                        <p class="resource-description">
+                            Stack de tecnologías que uso diariamente en mis proyectos.
+                        </p>
+                        <div class="tech-stack">
+                            <span class="tech-item">Laravel</span>
+                            <span class="tech-item">Symfony</span>
+                            <span class="tech-item">Ionic</span>
+                            <span class="tech-item">Angular</span>
+                            <span class="tech-item">MySQL</span>
+                            <span class="tech-item">PostgreSQL</span>
+                            <span class="tech-item">AG Grid</span>
+                            <span class="tech-item">PWA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="resource-title">Tips & Tricks</h3>
+                        <p class="resource-description">
+                            Consejos prácticos que he aprendido a lo largo de mi carrera.
+                        </p>
+                        <ul class="tips-list">
+                            <li>Separación de responsabilidades en Laravel</li>
+                            <li>Paginado del lado del cliente con AG Grid</li>
+                            <li>Service Workers para aplicaciones offline</li>
+                            <li>Arquitectura de servicios independientes</li>
+                            <li>Optimización de consultas SQL</li>
+                            <li>Patrones de diseño para APIs REST</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="resource-card">
+                        <div class="resource-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h3 class="resource-title">Recursos Recomendados</h3>
+                        <p class="resource-description">
+                            Enlaces y herramientas que uso frecuentemente en mis proyectos.
+                        </p>
+                        <div class="resource-links">
+                            <a href="https://laravel.com/docs" target="_blank" class="resource-link">
+                                <i class="fab fa-laravel"></i>
+                                Laravel Documentation
+                            </a>
+                            <a href="https://ionicframework.com/docs" target="_blank" class="resource-link">
+                                <i class="fab fa-angular"></i>
+                                Ionic Framework Docs
+                            </a>
+                            <a href="https://www.ag-grid.com/" target="_blank" class="resource-link">
+                                <i class="fas fa-table"></i>
+                                AG Grid Documentation
+                            </a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps" target="_blank" class="resource-link">
+                                <i class="fas fa-mobile-alt"></i>
+                                PWA Guide MDN
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding bg-light">
+        <div class="container">
+            <div class="section-header text-center mb-5">
+                <h2 class="section-title">¿Trabajamos Juntos?</h2>
+                <p class="section-subtitle">Me encanta colaborar en proyectos interesantes</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="contact-content text-center">
+                        <p class="contact-description mb-4">
+                            ¿Tienes un proyecto en mente? ¿Quieres discutir sobre desarrollo web o móvil? 
+                            ¡Me encantaría escuchar sobre tu idea!
+                        </p>
+                        
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:ing.enrique.sistemas@gmail.com">ing.enrique.sistemas@gmail.com</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+522461788892">+52 246 178 88 92</a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fab fa-github"></i>
+                                <a href="https://github.com/EnriqueXL" target="_blank">github.com/EnriqueXL</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-buttons mt-4">
+                            <a href="mailto:ing.enrique.sistemas@gmail.com" class="btn btn-primary btn-lg">
+                                <i class="fas fa-envelope"></i> Enviar Email
+                            </a>
+                            <a href="https://wa.me/522461788892" target="_blank" class="btn btn-success btn-lg">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 EnriqueXL. Desarrollado con ❤️ en México</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <div class="footer-social">
+                        <a href="https://github.com/EnriqueXL" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/luis-enrique-hernandez-vasquez-ba10731b9/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:ing.enrique.sistemas@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

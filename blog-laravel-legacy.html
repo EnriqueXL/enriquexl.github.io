@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Migrando Sistemas Legacy a Laravel: Separación de Responsabilidades - EnriqueXL</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/blog.css">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header con navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="./assets/img/profile/4.png" alt="EnriqueXL" class="nav-profile-pic">
+                EnriqueXL
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#home">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#projects">Proyectos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#resources">Recursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contact">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Switch de tema -->
+    <div class="switch">
+        <label>
+            <div>
+                <span class="icon moon"><i class="fas fa-moon"></i></span>
+                &nbsp;&nbsp;&nbsp;
+                <span class="icon sun"><i class="fas fa-sun"></i></span>
+            </div>
+            <input type="checkbox" id="modeSwitch">
+            <span class="slider" id="slider"></span>
+        </label>
+    </div>
+
+    <!-- Blog Post Content -->
+    <article class="blog-post">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <!-- Header del artículo -->
+                    <header class="blog-post-header">
+                        <div class="blog-category-badge">Laravel</div>
+                        <h1 class="blog-post-title">Migrando Sistemas Legacy a Laravel: Separación de Responsabilidades</h1>
+                        <div class="blog-post-meta">
+                            <span class="blog-post-date"><i class="far fa-calendar"></i> 15 Mar 2024</span>
+                            <span class="blog-post-read-time"><i class="far fa-clock"></i> 10 min lectura</span>
+                            <span class="blog-post-author"><i class="far fa-user"></i> Enrique Hernández</span>
+                        </div>
+                        <div class="blog-post-tags">
+                            <span class="blog-tag">Arquitectura</span>
+                            <span class="blog-tag">Traits</span>
+                            <span class="blog-tag">Vite</span>
+                            <span class="blog-tag">Laravel</span>
+                        </div>
+                    </header>
+
+                    <!-- Contenido del artículo -->
+                    <div class="blog-post-content">
+                        <p class="lead">
+                            Migrar sistemas PHP legacy a Laravel no es solo cambiar de framework, es una oportunidad para implementar 
+                            arquitecturas limpias y escalables. En este artículo comparto mi experiencia migrando sistemas antiguos 
+                            aplicando principios de separación de responsabilidades, traits, y herramientas modernas como Vite.
+                        </p>
+
+                        <h2>El Problema con los Sistemas Legacy</h2>
+                        <p>
+                            Los sistemas legacy típicamente tienen un problema común: <strong>todo está mezclado</strong>. 
+                            La lógica de negocio está en los controladores, las consultas SQL están dispersas por todo el código, 
+                            y no hay una clara separación de responsabilidades. Esto hace que el código sea difícil de mantener, 
+                            testear y escalar.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>❌ Código Legacy Típico</h4>
+                            <pre><code class="language-php">// Controlador con toda la lógica mezclada
+class UserController {
+    public function store(Request $request) {
+        // Validación
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8'
+        ]);
+
+        // Lógica de negocio
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        
+        // Consulta SQL directa
+        $user->save();
+        
+        // Envío de email
+        Mail::to($user->email)->send(new WelcomeEmail($user));
+        
+        // Logging
+        Log::info('Usuario creado: ' . $user->id);
+        
+        return redirect()->route('users.index');
+    }
+}</code></pre>
+                        </div>
+
+                        <h2>La Solución: Arquitectura Moderna con Laravel</h2>
+                        <p>
+                            Durante la migración, implementé una arquitectura basada en <strong>servicios independientes</strong>, 
+                            <strong>traits reutilizables</strong>, <strong>controladores limpios</strong> y <strong>herramientas modernas</strong>. 
+                            Cada clase tiene una responsabilidad específica y bien definida.
+                        </p>
+
+                        <h3>1. Uso de Traits para Reutilización de Código</h3>
+                        <p>
+                            Los traits son una excelente manera de compartir funcionalidad entre clases sin herencia múltiple. 
+                            En mi proyecto de RRHH, implementé un trait específico para manejar llamadas a APIs externas.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Trait para Manejo de APIs Externas</h4>
+                            <pre><code class="language-php">// app/Traits/HandlesExternalApiCalls.php
+trait HandlesExternalApiCalls
+{
+    protected function postToApi(string $url, array $data): array
+    {
+        try {
+            $response = Http::asForm()->post($url, $data);
+
+            if (!$response->successful()) {
+                Log::error('API POST error: response not successful', [
+                    'url' => $url,
+                    'status' => $response->status(),
+                    'body' => $response->body()
+                ]);
+
+                return [
+                    'status' => false,
+                    'message' => "Falla en la respuesta del servicio externo.",
+                    'error' => $response->body()
+                ];
+            }
+
+            // Verificar si la respuesta es JSON válido
+            $json = $response->json();
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                Log::error('API POST error: respuesta no es JSON válido', [
+                    'url' => $url,
+                    'response' => $response->body()
+                ]);
+
+                return [
+                    'status' => false,
+                    'message' => "La respuesta del servicio externo no es JSON válido.",
+                    'error' => $response->body()
+                ];
+            }
+
+            // Si no tiene clave status → respuesta malformada
+            if (!isset($json['status'])) {
+                Log::error('API POST error: respuesta sin clave status', [
+                    'url' => $url,
+                    'response' => $json
+                ]);
+
+                return [
+                    'status' => false,
+                    'message' => 'Respuesta inválida del servicio externo.',
+                    'error' => $json
+                ];
+            }
+
+            // Si status es false → fallo lógico controlado
+            if ($json['status'] === false) {
+                Log::warning('API POST lógica fallida', [
+                    'url' => $url,
+                    'message' => $json['message'] ?? 'Operación no realizada.',
+                    'error' => $json['error'] ?? null
+                ]);
+
+                return [
+                    'status' => false,
+                    'message' => $json['message'] ?? 'Operación no realizada.',
+                    'error' => $json['error'] ?? null
+                ];
+            }
+
+            return $json;
+
+        } catch (Throwable $th) {
+            Log::error('API POST exception', [
+                'url' => $url,
+                'exception' => $th
+            ]);
+
+            return [
+                'status' => false,
+                'message' => "Falla en el servicio externo.",
+                'error' => $th->getMessage()
+            ];
+        }
+    }
+}</code></pre>
+                        </div>
+
+                        <h3>2. Estructura de Rutas Organizada</h3>
+                        <p>
+                            Una buena organización de rutas es fundamental para mantener el código limpio y escalable. 
+                            En mi proyecto implementé una estructura modular usando prefijos y grupos.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Estructura de Rutas Modular</h4>
+                            <pre><code class="language-php">// routes/web.php
+// Autenticación
+Route::controller(AuthController::class)->group(function () {
+    Route::get('login', 'showLoginForm')->name('login.form');
+    Route::post('login', 'login')->name('login');
+    Route::post('logout', 'logout')->name('logout');
+});
+
+// Rutas de Empleados
+Route::prefix('employees')->group(function () {
+    Route::get('/', [EmployeeController::class, 'index'])->name('employees.index');
+    Route::get('/area/{area}', [EmployeeController::class, 'getEmployeesArea'])->name('employees.area-index');
+    Route::get('/create', [EmployeeController::class, 'create'])->name('employees.create');
+    Route::post('/', [EmployeeController::class, 'store'])->name('employees.store');
+    Route::get('/{employee}', [EmployeeController::class, 'show'])->name('employees.show');
+    Route::get('/{employee}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
+    Route::put('/{employee}', [EmployeeController::class, 'update'])->name('employees.update');
+    Route::delete('/{employee}', [EmployeeController::class, 'destroy'])->name('employees.destroy');
+});
+
+// Rutas de Gestión de Recursos Humanos
+Route::prefix('hr')->group(function () {
+    // Bonos
+    Route::prefix('bonuses')->group(function () {
+        Route::get('/create', [BonusController::class, 'create'])->name('bonuses.create');
+        Route::post('/', [BonusController::class, 'store'])->name('bonuses.store');
+        Route::get('/history', [BonusController::class, 'history'])->name('bonuses.history');
+    });
+
+    // Créditos
+    Route::prefix('credits')->group(function () {
+        Route::get('/create', [CreditController::class, 'create'])->name('credits.create');
+        Route::post('/', [CreditController::class, 'store'])->name('credits.store');
+        Route::get('/history', [CreditController::class, 'history'])->name('credits.history');
+    });
+
+    // Vacaciones
+    Route::prefix('vacations')->group(function () {
+        Route::get('/create', [VacationController::class, 'create'])->name('vacations.create');
+        Route::post('/', [VacationController::class, 'store'])->name('vacations.store');
+    });
+});</code></pre>
+                        </div>
+
+                        <h3>3. Servicios Simples con Traits</h3>
+                        <p>
+                            Los servicios contienen la lógica de negocio y utilizan traits para funcionalidades comunes. 
+                            En mi proyecto, los servicios se encargan de comunicarse con APIs externas.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Servicio de Empleados con Trait de API</h4>
+                            <pre><code class="language-php">// app/Services/EmployeesService.php
+class EmployeesService
+{
+    use HandlesExternalApiCalls;
+
+    protected string $apiUrl = 'https://www.micro-tec.com.mx/pagina/api_rh/models/Employee.php';
+
+    /**
+     * Obtiene todos los empleados con filtros opcionales
+     */
+    public function getAllEmployees(array $filters = []): array
+    {
+        $payload = array_merge(['function' => 'AllEmployees'], $filters);
+        return $this->postToApi($this->apiUrl, $payload);
+    }
+
+    /**
+     * Obtiene empleados por área específica
+     */
+    public function getEmployeesArea(array $filters = []): array
+    {
+        $payload = ['function' => 'AllEmployees', 'Area' => $filters['Area'] ?? ''];
+        return $this->postToApi($this->apiUrl, $payload);
+    }
+
+    /**
+     * Obtiene y procesa la lista de empleados
+     */
+    public function getProcessedEmployees(array $filters = []): array
+    {
+        // Llamada a la API
+        $response = $this->getAllEmployees($filters);
+
+        // Validar si la API respondió correctamente
+        if (!$response['status']) {
+            return [
+                'success' => false,
+                'message' => $response['message'] ?? 'Error desconocido',
+                'debug' => $response['debug'] ?? null,
+                'data' => [],
+            ];
+        }
+
+        // Procesar los datos de los empleados
+        $employees = collect($response['data'] ?? []);
+
+        // Asignar un valor por defecto al área si no existe
+        $employees = $employees->map(function ($employee) {
+            if (empty($employee['Area'])) {
+                $employee['Area'] = "SIN INFORMACIÓN";
+            }
+            $employee['N_Trabajador'] = intval($employee['N_Trabajador']);
+            return $employee;
+        });
+
+        return [
+            'success' => true,
+            'data' => $employees,
+        ];
+    }
+
+    /**
+     * Obtiene los datos de un empleado específico
+     */
+    public function showEmployee($id): array
+    {
+        $payload = ['function' => 'showEmployee', 'N_Trabajador' => $id];
+        return $this->postToApi($this->apiUrl, $payload);
+    }
+}</code></pre>
+                        </div>
+
+                        <h3>4. Controladores Simples con Inyección Básica</h3>
+                        <p>
+                            Los controladores se encargan del flujo HTTP y utilizan servicios para la lógica de negocio. 
+                            La inyección de dependencias es simple y directa.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Controlador de Empleados</h4>
+                            <pre><code class="language-php">// app/Http/Controllers/EmployeeController.php
+class EmployeeController extends Controller
+{
+    private EmployeesService $employeesService;
+
+    public function __construct(EmployeesService $employeesService)
+    {
+        $this->employeesService = $employeesService;
+        $this->middleware(CheckSession::class);
+    }
+
+    /**
+     * Muestra la lista de empleados y maneja solicitudes AJAX para AG Grid
+     */
+    public function index(Request $request)
+    {
+        $sucursales = $this->employeesService->getProcessedSucursales();
+
+        if ($request->ajax()) {
+            // Preparar filtros desde la solicitud
+            $filters = [
+                'filterStatus' => $request->filterStatus,
+                'filterSucursal' => $request->filterSucursal,
+                'filterStartDate' => $request->filterStartDate,
+                'filterEndDate' => $request->filterEndDate,
+            ];
+
+            // Obtener empleados procesados desde el servicio
+            $result = $this->employeesService->getProcessedEmployees($filters);
+
+            // Si hubo un error, devolver la respuesta con error
+            if (!$result['success']) {
+                return response()->json([
+                    'success' => false,
+                    'data' => [],
+                    'message' => $result['message'],
+                    'debug' => $result['debug'] ?? null
+                ]);
+            }
+
+            // Procesar datos para AG Grid
+            $processedData = $this->processDataForAgGrid($result['data']);
+
+            // Devolver como JSON para AG Grid
+            return response()->json([
+                'success' => true,
+                'data' => $processedData
+            ]);
+        }
+
+        // Retornar la vista para solicitudes normales
+        return view('employees.index', compact('sucursales'));
+    }
+
+    /**
+     * Procesa los datos para ser utilizados en AG Grid
+     */
+    private function processDataForAgGrid($data)
+    {
+        return collect($data)->map(function ($row) {
+            $row['acciones'] = $row['N_Trabajador'];
+            return $row;
+        })->toArray();
+    }
+
+    /**
+     * Obtiene empleados por área específica
+     */
+    public function getEmployeesArea($area): JsonResponse
+    {
+        $employees = $this->employeesService->getEmployeesArea(['Area' => $area]);
+        return response()->json($employees);
+    }
+
+    /**
+     * Muestra los detalles de un empleado específico
+     */
+    public function show($id)
+    {
+        $employee = $this->employeesService->getProcessedEmployee($id);
+        return view('employees.show', compact('employee'));
+    }
+}</code></pre>
+                        </div>
+
+                        <h3>5. Configuración Simple de Vite</h3>
+                        <p>
+                            Vite proporciona un desarrollo mucho más rápido que Webpack. En mi proyecto, 
+                            la configuración es simple y directa.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Configuración Básica de Vite</h4>
+                            <pre><code class="language-javascript">// vite.config.js
+import { defineConfig } from 'vite';
+import laravel from 'laravel-vite-plugin';
+
+export default defineConfig({
+    plugins: [
+        laravel({
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+            ],
+            refresh: true,
+        }),
+    ],
+});</code></pre>
+                        </div>
+
+                        <div class="code-example">
+                            <h4>✅ Integración en Blade Templates</h4>
+                            <pre><code class="language-html">&lt;!-- resources/views/layouts/app.blade.php --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;@yield('title', 'Sistema RRHH')&lt;/title&gt;
+    
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @stack('styles')
+&lt;/head&gt;
+&lt;body&gt;
+    @yield('content')
+    
+    @stack('scripts')
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                        </div>
+
+                        <h3>6. Otros Servicios del Sistema</h3>
+                        <p>
+                            El proyecto incluye varios servicios especializados para diferentes funcionalidades del sistema de RRHH.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Servicios Especializados</h4>
+                            <pre><code class="language-php">// app/Services/BonusService.php
+class BonusService
+{
+    use HandlesExternalApiCalls;
+
+    protected string $apiUrl = 'https://www.micro-tec.com.mx/pagina/api_rh/models/Bonus.php';
+
+    public function createBonus(array $data): array
+    {
+        $payload = array_merge(['function' => 'createBonus'], $data);
+        return $this->postToApi($this->apiUrl, $payload);
+    }
+
+    public function getBonusHistory(): array
+    {
+        $payload = ['function' => 'getBonusHistory'];
+        return $this->postToApi($this->apiUrl, $payload);
+    }
+}
+
+// app/Services/CreditService.php
+class CreditService
+{
+    use HandlesExternalApiCalls;
+
+    protected string $apiUrl = 'https://www.micro-tec.com.mx/pagina/api_rh/models/Credit.php';
+
+    public function createCredit(array $data): array
+    {
+        $payload = array_merge(['function' => 'createCredit'], $data);
+        return $this->postToApi($this->apiUrl, $payload);
+    }
+
+    public function getCreditHistory(): array
+    {
+        $payload = ['function' => 'getCreditHistory'];
+        return $this->postToApi($this->apiUrl, $payload);
+    }
+}
+
+// app/Services/PayrollService.php
+class PayrollService
+{
+    use HandlesExternalApiCalls;
+
+    protected string $apiUrl = 'https://www.micro-tec.com.mx/pagina/api_rh/models/Payroll.php';
+
+    public function generatePayroll(array $data): array
+    {
+        $payload = array_merge(['function' => 'generatePayroll'], $data);
+        return $this->postToApi($this->apiUrl, $payload);
+    }
+}</code></pre>
+                        </div>
+
+                        <h2>Beneficios de esta Arquitectura</h2>
+                        <ul>
+                            <li><strong>Reutilización:</strong> El trait HandlesExternalApiCalls se usa en todos los servicios</li>
+                            <li><strong>Consistencia:</strong> Manejo uniforme de errores y respuestas de APIs externas</li>
+                            <li><strong>Mantenibilidad:</strong> Cambios en la lógica de APIs se hacen en un solo lugar</li>
+                            <li><strong>Escalabilidad:</strong> Fácil agregar nuevos servicios que usen APIs externas</li>
+                            <li><strong>Legibilidad:</strong> Código más claro y fácil de entender</li>
+                            <li><strong>Desarrollo Rápido:</strong> Vite proporciona hot reload y build optimizado</li>
+                            <li><strong>Logging Centralizado:</strong> Todos los errores de API se registran de manera consistente</li>
+                        </ul>
+
+                        <h2>Integración con APIs Externas</h2>
+                        <p>
+                            Una de las ventajas de esta arquitectura es la <strong>integración limpia</strong> 
+                            con sistemas legacy existentes a través de APIs externas. El trait centraliza toda la lógica 
+                            de comunicación y manejo de errores.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Ventajas del Trait HandlesExternalApiCalls</h4>
+                            <pre><code class="language-php">// Beneficios del trait implementado:
+
+// 1. Manejo consistente de errores HTTP
+if (!$response->successful()) {
+    Log::error('API POST error: response not successful', [
+        'url' => $url,
+        'status' => $response->status(),
+        'body' => $response->body()
+    ]);
+}
+
+// 2. Validación de respuestas JSON
+$json = $response->json();
+if (json_last_error() !== JSON_ERROR_NONE) {
+    Log::error('API POST error: respuesta no es JSON válido');
+}
+
+// 3. Manejo de errores lógicos controlados
+if ($json['status'] === false) {
+    Log::warning('API POST lógica fallida', [
+        'message' => $json['message'] ?? 'Operación no realizada.'
+    ]);
+}
+
+// 4. Captura de excepciones
+catch (Throwable $th) {
+    Log::error('API POST exception', [
+        'url' => $url,
+        'exception' => $th
+    ]);
+}</code></pre>
+                        </div>
+
+                        <h2>Proyecto Real: Sistema de RRHH con Laravel 12 + Bootstrap 5 + Vite + AG Grid</h2>
+                        <p>
+                            Apliqué todas estas mejores prácticas en un proyecto real: un sistema de gestión de recursos humanos 
+                            desarrollado con Laravel 12, Bootstrap 5, Vite y AG Grid. Este proyecto demuestra cómo la arquitectura 
+                            limpia, traits y herramientas modernas se traducen en código mantenible y escalable.
+                        </p>
+
+                        <div class="project-showcase">
+                            <h4>Características del Proyecto</h4>
+                            <ul>
+                                <li><strong>Laravel 12:</strong> Última versión con todas las mejoras de rendimiento</li>
+                                <li><strong>Traits:</strong> Reutilización de código para funcionalidades comunes</li>
+                                <li><strong>Bootstrap 5:</strong> Framework CSS moderno para UI responsive</li>
+                                <li><strong>Vite:</strong> Build tool rápido para desarrollo moderno</li>
+                                <li><strong>AG Grid:</strong> Tablas de datos de alto rendimiento</li>
+                                <li><strong>Arquitectura limpia:</strong> Separación completa de responsabilidades</li>
+                                <li><strong>Rutas modulares:</strong> Organización clara y escalable</li>
+                            </ul>
+                        </div>
+
+                        <h3>Integración de AG Grid con Bootstrap 5</h3>
+                        <p>
+                            AG Grid se integra perfectamente con Bootstrap 5, proporcionando una experiencia de usuario excepcional.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Configuración de AG Grid con Bootstrap</h4>
+                            <pre><code class="language-html">&lt;!-- resources/views/employees/index.blade.php --&gt;
+@extends('layouts.app')
+
+@section('content')
+&lt;div class="container-fluid"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-12"&gt;
+            &lt;div class="card"&gt;
+                &lt;div class="card-header d-flex justify-content-between align-items-center"&gt;
+                    &lt;h5 class="card-title mb-0"&gt;Gestión de Empleados&lt;/h5&gt;
+                    &lt;a href="{{ route('employees.create') }}" class="btn btn-primary"&gt;
+                        &lt;i class="fas fa-plus"&gt;&lt;/i&gt; Nuevo Empleado
+                    &lt;/a&gt;
+                &lt;/div&gt;
+                &lt;div class="card-body"&gt;
+                    &lt;div id="employeesGrid" class="ag-theme-bootstrap" style="height: 600px;"&gt;&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+@endsection
+
+@push('scripts')
+&lt;script&gt;
+document.addEventListener('DOMContentLoaded', function() {
+    const gridOptions = {
+        columnDefs: [
+            { field: 'id', headerName: 'ID', width: 80 },
+            { field: 'full_name', headerName: 'Nombre Completo', width: 200 },
+            { field: 'email', headerName: 'Email', width: 200 },
+            { field: 'department', headerName: 'Departamento', width: 150 },
+            { field: 'position', headerName: 'Puesto', width: 150 },
+            { field: 'hire_date', headerName: 'Fecha Contratación', width: 150 },
+            { field: 'status', headerName: 'Estado', width: 100 }
+        ],
+        rowData: @json($employees),
+        pagination: true,
+        paginationPageSize: 20,
+        domLayout: 'autoHeight'
+    };
+
+    const gridDiv = document.querySelector('#employeesGrid');
+    new agGrid.Grid(gridDiv, gridOptions);
+});
+&lt;/script&gt;
+@endpush</code></pre>
+                        </div>
+
+                        <h2>Lecciones Aprendidas</h2>
+                        <ol>
+                            <li><strong>Planifica la migración:</strong> No migres todo de una vez, hazlo por módulos</li>
+                            <li><strong>Usa traits para APIs externas:</strong> Centraliza el manejo de errores y respuestas</li>
+                            <li><strong>Organiza las rutas:</strong> Usa prefijos y grupos para mantener el código limpio</li>
+                            <li><strong>Manejo de errores consistente:</strong> Logging centralizado para todas las APIs externas</li>
+                            <li><strong>Documenta:</strong> Explica la nueva arquitectura al equipo</li>
+                            <li><strong>Capacita:</strong> Enseña al equipo los nuevos patrones</li>
+                            <li><strong>Usa herramientas modernas:</strong> Vite + Bootstrap 5 + AG Grid = desarrollo eficiente</li>
+                            <li><strong>Inyección simple de dependencias:</strong> Mantén la simplicidad en los controladores</li>
+                            <li><strong>Validación de respuestas:</strong> Siempre valida las respuestas de APIs externas</li>
+                            <li><strong>Logging detallado:</strong> Registra errores con contexto para debugging</li>
+                        </ol>
+
+                        <h2>Conclusión</h2>
+                        <p>
+                            Migrar a Laravel no es solo cambiar de framework, es una oportunidad para mejorar 
+                            la arquitectura de tu aplicación. La implementación de traits para manejo de APIs externas, 
+                            la organización modular de rutas, servicios simples y herramientas modernas como Vite 
+                            hacen que el código sea más mantenible y escalable. En mi experiencia con el sistema de RRHH, 
+                            esta arquitectura ha demostrado ser efectiva para integrar sistemas legacy existentes 
+                            con una nueva interfaz moderna, manteniendo la simplicidad y la consistencia en el manejo 
+                            de errores. La inversión inicial en una buena arquitectura se paga con creces a largo plazo.
+                        </p>
+
+                        <div class="blog-post-footer">
+                            <div class="share-buttons">
+                                <h4>Compartir este artículo:</h4>
+                                <a href="#" class="share-btn twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a href="#" class="share-btn linkedin"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                                <a href="#" class="share-btn facebook"><i class="fab fa-facebook"></i> Facebook</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 EnriqueXL. Desarrollado con ❤️ en México</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <div class="footer-social">
+                        <a href="https://github.com/EnriqueXL" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/luis-enrique-hernandez-vasquez-ba10731b9/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:ing.enrique.sistemas@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html> 

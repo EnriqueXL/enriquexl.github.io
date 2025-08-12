@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimización SQL: Paginado y AG Grid vs DataTables - EnriqueXL</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/blog.css">
+
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header con navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="./assets/img/profile/4.png" alt="EnriqueXL" class="nav-profile-pic">
+                EnriqueXL
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#home">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#blog">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#projects">Proyectos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#resources">Recursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contact">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Switch de tema -->
+    <div class="switch">
+        <label>
+            <div>
+                <span class="icon moon"><i class="fas fa-moon"></i></span>
+                &nbsp;&nbsp;&nbsp;
+                <span class="icon sun"><i class="fas fa-sun"></i></span>
+            </div>
+            <input type="checkbox" id="modeSwitch">
+            <span class="slider" id="slider"></span>
+        </label>
+    </div>
+
+    <!-- Blog Post Content -->
+    <article class="blog-post">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <!-- Header del artículo -->
+                    <header class="blog-post-header">
+                        <div class="blog-category-badge">SQL</div>
+                        <h1 class="blog-post-title">Optimización SQL: Paginado y AG Grid vs DataTables</h1>
+                        <div class="blog-post-meta">
+                            <span class="blog-post-date"><i class="far fa-calendar"></i> 5 Mar 2024</span>
+                            <span class="blog-post-read-time"><i class="far fa-clock"></i> 7 min lectura</span>
+                            <span class="blog-post-author"><i class="far fa-user"></i> Enrique Hernández</span>
+                        </div>
+                        <div class="blog-post-tags">
+                            <span class="blog-tag">Performance</span>
+                            <span class="blog-tag">AG Grid</span>
+                            <span class="blog-tag">Paginado</span>
+                            <span class="blog-tag">SQL</span>
+                        </div>
+                    </header>
+
+                    <!-- Contenido del artículo -->
+                    <div class="blog-post-content">
+                        <p class="lead">
+                            La optimización de consultas SQL es crucial para el rendimiento de las aplicaciones. 
+                            En este artículo comparto mi experiencia implementando paginado del lado del cliente 
+                            y por qué AG Grid supera por mucho a DataTables de jQuery.
+                        </p>
+
+                        <h2>El Problema del Paginado del Lado del Servidor</h2>
+                        <p>
+                            Tradicionalmente, el paginado se implementa en el servidor, lo que significa que cada 
+                            cambio de página requiere una nueva consulta SQL. Esto puede ser ineficiente y lento, 
+                            especialmente con grandes volúmenes de datos.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>❌ Paginado del Lado del Servidor</h4>
+                            <pre><code class="language-php">// Consulta SQL con LIMIT y OFFSET
+$page = $_GET['page'] ?? 1;
+$perPage = 20;
+$offset = ($page - 1) * $perPage;
+
+$sql = "SELECT * FROM users 
+        ORDER BY created_at DESC 
+        LIMIT $perPage OFFSET $offset";
+
+// Cada cambio de página = nueva consulta al servidor
+$users = DB::select($sql);</code></pre>
+                        </div>
+
+                        <h2>La Solución: Paginado del Lado del Cliente</h2>
+                        <p>
+                            Implementé una estrategia de paginado del lado del cliente que carga todos los datos 
+                            una sola vez y maneja la paginación en el navegador. Esto reduce significativamente 
+                            la carga del servidor y mejora la experiencia del usuario.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Paginado del Lado del Cliente</h4>
+                            <pre><code class="language-php">// Cargar todos los datos una sola vez
+public function getAllUsers() {
+    return User::select('id', 'name', 'email', 'created_at')
+               ->orderBy('created_at', 'desc')
+               ->get();
+}
+
+// El cliente maneja la paginación
+// JavaScript se encarga de mostrar solo los registros necesarios</code></pre>
+                        </div>
+
+                        <h2>AG Grid: La Mejor Opción para Tablas de Datos</h2>
+                        <p>
+                            Después de probar varias librerías, AG Grid se destacó por su rendimiento, 
+                            funcionalidades avanzadas y flexibilidad. En mi proyecto de sistema de RRHH con Laravel 12, 
+                            AG Grid demostró ser la elección perfecta para manejar grandes volúmenes de datos de empleados.
+                        </p>
+
+                        <h3>Ventajas de AG Grid sobre DataTables</h3>
+                        <ul>
+                            <li><strong>Rendimiento:</strong> Maneja millones de registros sin problemas</li>
+                            <li><strong>Virtual Scrolling:</strong> Solo renderiza las filas visibles</li>
+                            <li><strong>Funcionalidades Avanzadas:</strong> Filtros, ordenamiento, agrupación</li>
+                            <li><strong>Personalización:</strong> Altamente configurable</li>
+                            <li><strong>TypeScript:</strong> Soporte nativo para TypeScript</li>
+                            <li><strong>React/Angular:</strong> Componentes específicos para cada framework</li>
+                        </ul>
+
+                        <h3>Implementación de AG Grid</h3>
+                        <p>
+                            AG Grid se integra perfectamente con Laravel y proporciona una experiencia 
+                            de usuario excepcional.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Configuración de AG Grid</h4>
+                            <pre><code class="language-typescript">import { GridOptions } from 'ag-grid-community';
+
+const gridOptions: GridOptions = {
+  columnDefs: [
+    { field: 'id', headerName: 'ID', sortable: true, filter: true },
+    { field: 'name', headerName: 'Nombre', sortable: true, filter: true },
+    { field: 'email', headerName: 'Email', sortable: true, filter: true },
+    { field: 'created_at', headerName: 'Fecha', sortable: true, filter: true }
+  ],
+  rowData: [], // Se llena con datos del servidor
+  pagination: true,
+  paginationPageSize: 20,
+  domLayout: 'autoHeight',
+  defaultColDef: {
+    resizable: true,
+    sortable: true,
+    filter: true
+  },
+  onGridReady: (params) => {
+    // Cargar datos cuando la grilla esté lista
+    this.loadData();
+  }
+};</code></pre>
+                        </div>
+
+                        <h3>Integración con Laravel</h3>
+                        <p>
+                            La integración con Laravel es sencilla y eficiente.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Controlador Laravel</h4>
+                            <pre><code class="language-php">class UserController extends Controller {
+    public function index() {
+        $users = User::select('id', 'name', 'email', 'created_at')
+                    ->orderBy('created_at', 'desc')
+                    ->get()
+                    ->map(function ($user) {
+                        return [
+                            'id' => $user->id,
+                            'name' => $user->name,
+                            'email' => $user->email,
+                            'created_at' => $user->created_at->format('Y-m-d H:i:s')
+                        ];
+                    });
+
+        return response()->json($users);
+    }
+}</code></pre>
+                        </div>
+
+                        <h2>Optimizaciones SQL Adicionales</h2>
+                        <h3>1. Índices Estratégicos</h3>
+                        <p>
+                            Los índices correctos son fundamentales para el rendimiento de las consultas.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Índices Recomendados</h4>
+                            <pre><code class="language-sql">-- Índice para ordenamiento por fecha
+CREATE INDEX idx_users_created_at ON users(created_at DESC);
+
+-- Índice compuesto para búsquedas frecuentes
+CREATE INDEX idx_users_name_email ON users(name, email);
+
+-- Índice para filtros comunes
+CREATE INDEX idx_users_status ON users(status);</code></pre>
+                        </div>
+
+                        <h3>2. Consultas Optimizadas</h3>
+                        <p>
+                            Evita SELECT * y usa solo las columnas necesarias.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Consulta Optimizada</h4>
+                            <pre><code class="language-php">// ❌ Mal: Selecciona todas las columnas
+$users = User::all();
+
+// ✅ Bien: Solo las columnas necesarias
+$users = User::select('id', 'name', 'email', 'created_at')
+            ->orderBy('created_at', 'desc')
+            ->get();</code></pre>
+                        </div>
+
+                        <h3>3. Eager Loading</h3>
+                        <p>
+                            Usa eager loading para evitar el problema N+1.
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Eager Loading</h4>
+                            <pre><code class="language-php">// ❌ Mal: Problema N+1
+$users = User::all();
+foreach ($users as $user) {
+    echo $user->profile->name; // Consulta adicional por cada usuario
+}
+
+// ✅ Bien: Eager loading
+$users = User::with('profile')->get();
+foreach ($users as $user) {
+    echo $user->profile->name; // Sin consultas adicionales
+}</code></pre>
+                        </div>
+
+                        <h2>Comparación de Rendimiento</h2>
+                        <p>
+                            Realicé pruebas de rendimiento comparando diferentes enfoques:
+                        </p>
+
+                        <div class="performance-comparison">
+                            <h4>Resultados de Rendimiento</h4>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Enfoque</th>
+                                        <th>Tiempo de Carga</th>
+                                        <th>Uso de Memoria</th>
+                                        <th>Experiencia de Usuario</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>DataTables + Paginado Servidor</td>
+                                        <td>2-3 segundos</td>
+                                        <td>Alto</td>
+                                        <td>Lenta</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AG Grid + Paginado Cliente</td>
+                                        <td>0.5-1 segundo</td>
+                                        <td>Bajo</td>
+                                        <td>Excelente</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h2>Experiencia Real: Sistema de RRHH con AG Grid</h2>
+                        <p>
+                            En mi proyecto de sistema de gestión de recursos humanos, implementé AG Grid para manejar 
+                            datos de empleados, nóminas y reportes. La experiencia fue excepcional, especialmente 
+                            comparada con DataTables que había usado anteriormente.
+                        </p>
+
+                        <div class="project-showcase">
+                            <h4>Casos de Uso en el Sistema de RRHH</h4>
+                            <ul>
+                                <li><strong>Gestión de Empleados:</strong> Tabla con 1000+ empleados, filtros avanzados y búsqueda</li>
+                                <li><strong>Reportes de Nómina:</strong> Datos complejos con cálculos y exportación a Excel</li>
+                                <li><strong>Dashboard de RRHH:</strong> Métricas y KPIs con gráficos integrados</li>
+                                <li><strong>Gestor de Permisos:</strong> Aprobaciones y estados con actualización en tiempo real</li>
+                                <li><strong>Búsqueda Avanzada:</strong> Filtros por departamento, fecha, estado, etc.</li>
+                            </ul>
+                        </div>
+
+                        <h3>Ventajas Específicas en el Proyecto Real</h3>
+                        <ul>
+                            <li><strong>Rendimiento:</strong> La tabla de empleados carga instantáneamente con 1000+ registros</li>
+                            <li><strong>Filtros Avanzados:</strong> Búsqueda por múltiples criterios simultáneamente</li>
+                            <li><strong>Exportación:</strong> Exportar a Excel con formato personalizado</li>
+                            <li><strong>Edición Inline:</strong> Editar datos directamente en la tabla</li>
+                            <li><strong>Responsive:</strong> Funciona perfectamente en tablets y móviles</li>
+                        </ul>
+
+                        <h2>Implementación Completa</h2>
+                        <p>
+                            Aquí está la implementación completa que uso en mis proyectos:
+                        </p>
+
+                        <div class="code-example">
+                            <h4>✅ Implementación Completa</h4>
+                            <pre><code class="language-html">&lt;!-- HTML --&gt;
+&lt;div id="myGrid" class="ag-theme-alpine" style="height: 500px;"&gt;&lt;/div&gt;</code></pre>
+                        </div>
+
+                        <div class="code-example">
+                            <h4>✅ JavaScript Completo</h4>
+                            <pre><code class="language-javascript">// Configuración completa de AG Grid
+const gridOptions = {
+  columnDefs: [
+    { 
+      field: 'id', 
+      headerName: 'ID', 
+      width: 80,
+      sortable: true, 
+      filter: 'agNumberColumnFilter'
+    },
+    { 
+      field: 'name', 
+      headerName: 'Nombre', 
+      width: 200,
+      sortable: true, 
+      filter: 'agTextColumnFilter',
+      cellRenderer: (params) => {
+        return `<strong>${params.value}</strong>`;
+      }
+    },
+    { 
+      field: 'email', 
+      headerName: 'Email', 
+      width: 250,
+      sortable: true, 
+      filter: 'agTextColumnFilter'
+    },
+    { 
+      field: 'created_at', 
+      headerName: 'Fecha', 
+      width: 150,
+      sortable: true, 
+      filter: 'agDateColumnFilter',
+      valueFormatter: (params) => {
+        return new Date(params.value).toLocaleDateString();
+      }
+    }
+  ],
+  rowData: [],
+  pagination: true,
+  paginationPageSize: 20,
+  paginationPageSizeSelector: [10, 20, 50, 100],
+  domLayout: 'autoHeight',
+  defaultColDef: {
+    resizable: true,
+    sortable: true,
+    filter: true,
+    floatingFilter: true
+  },
+  onGridReady: (params) => {
+    loadData();
+  },
+  onRowClicked: (params) => {
+    console.log('Fila clickeada:', params.data);
+  }
+};
+
+// Cargar datos
+async function loadData() {
+  try {
+    const response = await fetch('/api/users');
+    const data = await response.json();
+    gridOptions.api.setRowData(data);
+  } catch (error) {
+    console.error('Error cargando datos:', error);
+  }
+}
+
+// Inicializar la grilla
+document.addEventListener('DOMContentLoaded', () => {
+  const gridDiv = document.querySelector('#myGrid');
+  new agGrid.Grid(gridDiv, gridOptions);
+});</code></pre>
+                        </div>
+
+                        <h2>Lecciones Aprendidas</h2>
+                        <ol>
+                            <li><strong>Paginado del cliente:</strong> Mejora significativamente el rendimiento</li>
+                            <li><strong>AG Grid:</strong> Supera por mucho a DataTables en funcionalidad y rendimiento</li>
+                            <li><strong>Índices SQL:</strong> Son cruciales para consultas rápidas</li>
+                            <li><strong>Eager Loading:</strong> Evita el problema N+1</li>
+                            <li><strong>Optimización de consultas:</strong> Siempre selecciona solo las columnas necesarias</li>
+                        </ol>
+
+                        <h2>Conclusión</h2>
+                        <p>
+                            La combinación de paginado del lado del cliente con AG Grid ha transformado 
+                            la experiencia de usuario en mis aplicaciones. El rendimiento mejoró drásticamente 
+                            y la funcionalidad es mucho más rica que con DataTables. AG Grid es definitivamente 
+                            la mejor opción para tablas de datos complejas y de alto rendimiento.
+                        </p>
+
+                        <div class="blog-post-footer">
+                            <div class="share-buttons">
+                                <h4>Compartir este artículo:</h4>
+                                <a href="#" class="share-btn twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a href="#" class="share-btn linkedin"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                                <a href="#" class="share-btn facebook"><i class="fab fa-facebook"></i> Facebook</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 EnriqueXL. Desarrollado con ❤️ en México</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <div class="footer-social">
+                        <a href="https://github.com/EnriqueXL" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/luis-enrique-hernandez-vasquez-ba10731b9/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:ing.enrique.sistemas@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html> 
