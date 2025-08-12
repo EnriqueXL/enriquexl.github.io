@@ -8,6 +8,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/image-optimization.css">
 
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,7 +71,10 @@
                     <div class="hero-content text-center">
                         <div class="hero-header">
                             <div class="protected-image-container">
-                                <img src="assets/img/profile-picture/profile.jpeg" alt="Enrique Hernández" class="hero-image protected-image" draggable="false" onerror="this.src='assets/img/profile/1.png'">
+                                <picture>
+                                    <source srcset="assets/img/profile-picture/profile.webp" type="image/webp">
+                                    <img src="assets/img/profile-picture/profile.jpeg" alt="Enrique Hernández" class="hero-image protected-image" draggable="false" onerror="this.src='assets/img/profile/1.webp'">
+                                </picture>
                                 <div class="image-overlay">
                                     <i class="fas fa-shield-alt"></i>
                                     <!-- <span>Imagen Protegida</span> -->
@@ -562,6 +566,7 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     
     <script src="js/main.js"></script>
+    <script src="js/image-optimization.js"></script>
 </body>
 
 </html>

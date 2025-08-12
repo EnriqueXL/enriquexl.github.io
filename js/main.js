@@ -12,12 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Cambiar imagen de perfil según el modo
     if (heroImage) {
-        const imagePath = 'assets/img/profile-picture/profile.jpeg';
+        const imagePath = 'assets/img/profile-picture/profile.webp';
         heroImage.src = imagePath;
         console.log('Cargando imagen:', imagePath);
     }
             if (navProfilePic) {
-        const navImagePath = isLightMode ? 'assets/img/profile/1.png' : 'assets/img/profile/4.png';
+        const navImagePath = isLightMode ? 'assets/img/profile/1.webp' : 'assets/img/profile/4.webp';
         navProfilePic.src = navImagePath;
     }
 
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         profileImage.addEventListener('error', () => {
             console.error('Error cargando imagen de perfil');
             // Intentar con la imagen alternativa
-            profileImage.src = 'assets/img/profile/4.png';
+            profileImage.src = 'assets/img/profile/4.webp';
         });
     }
 
